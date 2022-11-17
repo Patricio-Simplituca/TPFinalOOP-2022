@@ -49,7 +49,7 @@ class Garage_service():
         ahora=tiempo.strftime('%d/%m/%Y %H:%M:%S')
         with open('garage.csv',"r", newline='') as f:  
             reader = csv.DictReader(f,delimiter=",",fieldnames=["patente","fechahora_entrada","fechahora_salida"])
-            registros_sin_campos=[row for i, row in enumerate(reader) if i != 0] #son todos losregsitros menos los hjeaders- sacame los cmapos para tods los campos menos el que tenga indice 0 - asd es una varailbe/memoria en la puedo editar  
+            registros_sin_campos=[row for i, row in enumerate(reader) if i != 0] 
         f.close()
         for row in registros_sin_campos:
             if row["patente"]==numero_patente and row["fechahora_salida"]=="0":
@@ -68,6 +68,22 @@ class Garage_service():
             reader = csv.DictReader(f)
             for row in reader:
                 if row["patente"] ==numero_patente :
+                    return not None
+            return None
+    
+    def comprobar_fecha_entrada(self,fecha_a_modificar,patente):
+        with open('garage.csv',"r", newline='') as f: 
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row["fechahora_entrada"] ==fecha_a_modificar and row ["patente"]==patente :
+                    return not None
+            return None
+    
+    def comprobar_fecha_salida(self,fecha_a_modificar,patente):
+        with open('garage.csv',"r", newline='') as f: 
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row["fechahora_salida"] ==fecha_a_modificar and row ["patente"]==patente :
                     return not None
             return None
 

@@ -1,5 +1,6 @@
 import garagepy.garage_service
 import garagepy.usuario
+import garagepy.movil
 
 def menu(persona_usuario):
     opcion=int(input("\n                 MENU\n \n1 - Buscar patente \n2 - Registrar patente  \n3 - Salir del Garage \n4 - Ingresar al garage \n5 - Modificar fecha y hora de entrada y salida \n6 - Ver movimientos \n7 - Salir\n \nElija una opcion: "))
@@ -24,7 +25,7 @@ def menu(persona_usuario):
             color=input("Ingrese color del auto: ") 
             observaciones=input("Ingrese alguna observacion del auto: ")
             auto_registro=garagepy.movil.Movil(patente,marca,modelo,color,observaciones)
-            garagepy.garage_service.Garage_service().registar_auto(auto_registro,persona_usuario)
+            garagepy.garage_service.Garage_service().registar_auto(auto_registro) #Antes estaba asi: garagepy.garage_service.Garage_service().registar_auto(auto_registro,persona_usuario)
         elif auto is not None:
             print("El auto ya se encuentra en la base de datos del garage.")
             return False 
@@ -65,9 +66,21 @@ def menu(persona_usuario):
             print("Si quiere modificar la fecha y hora de salida escribra: 'SALIDA'")
             opcion_entrada_salida=input("Ingrese opcion: ")
             if opcion_entrada_salida=="ENTRADA":
-                garagepy.usuario.Usuario_service().modificar_fechahora_entrada(patente,persona_usuario)
+                fecha_a_modificar=input("Ingrese la fecha de entrada que quiere modificar: ")
+                confirmar=garagepy.garage_service.Garage_service().comprobar_fecha_entrada(fecha_a_modificar,patente)
+                if confirmar is not None:
+                    garagepy.usuario.Usuario_service().modificar_fechahora_entrada(patente,fecha_a_modificar)
+                else:
+                    print("No hay una fecha que coincida con su busqueda y/o la patente que ingreso, nunca ingreso al garage.")
+                    return False
             elif opcion_entrada_salida=="SALIDA":
-                garagepy.usuario.Usuario_service().modificar_fechahora_salida(patente,persona_usuario)
+                fecha_a_modificar=input("Ingrese la fecha de salida que quiere modificar: ")
+                confirmar=garagepy.garage_service.Garage_service().comprobar_fecha_salida(fecha_a_modificar,patente)
+                if confirmar is not None:
+                    garagepy.usuario.Usuario_service().modificar_fechahora_salida(patente,fecha_a_modificar)
+                else:
+                    print("No hay una fecha que coincida con su busqueda y/o la patente que ingreso, nunca ingreso al garage.")
+                    return False
         elif persona_usuario.tipo_usuario=="USER":
             print("No tiene permisos para realizar esta accion")
             return False 

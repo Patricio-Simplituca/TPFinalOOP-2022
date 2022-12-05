@@ -22,10 +22,9 @@ class Usuario_service():
                         tipo_usuario=   row["tipo_usuario"])
                     f.close()
                     return persona_usuario
-                else:
-                    print("No se encuentra")
-                    f.close()
-                    return False
+            print("No se encuentra")
+            f.close()
+            return False
 
     def modificar_fechahora_entrada(self,numero_patente,fecha_a_modificar):
         with open('garage.csv',"r", newline='') as f:  

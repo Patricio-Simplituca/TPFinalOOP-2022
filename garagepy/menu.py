@@ -25,7 +25,7 @@ def menu(persona_usuario):
             color=input("Ingrese color del auto: ") 
             observaciones=input("Ingrese alguna observacion del auto: ")
             auto_registro=garagepy.movil.Movil(patente,marca,modelo,color,observaciones)
-            garagepy.garage_service.Garage_service().registar_auto(auto_registro) #Antes estaba asi: garagepy.garage_service.Garage_service().registar_auto(auto_registro,persona_usuario)
+            garagepy.garage_service.Garage_service().registar_auto(auto_registro)
         elif auto is not None:
             print("El auto ya se encuentra en la base de datos del garage.")
             return False 
